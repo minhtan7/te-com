@@ -10,6 +10,15 @@ const userSchema = Schema(
     password: { type: String, required: true },
     role: { type: String, enum: ["user", "admin"] },
     balance: { type: Number, default: 0 },
+    cart: [
+      {
+        name: { type: String, required: true },
+        description: { type: String, required: true },
+        price: { type: Number, required: true },
+        images: [{ imageUrl: { type: String, required: true } }],
+        quantity: { type: Number, required: true },
+      },
+    ],
     isDeleted: { type: Boolean, default: false },
   },
   { timestamps: true }

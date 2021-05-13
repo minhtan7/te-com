@@ -6,14 +6,15 @@ const orderController = {};
 //Create the order
 orderController.createOrder = async (req, res, next) => {
   try {
-    const uId = req.userId;
-    const { userId, products, total } = req.body;
-    //userId should take from the login require??
-
+    const userId = req.userId;
+    const { products } = req.body;
+    const total = products.reduce((total, product) => {
+      return total + product.quantity * product.price;
+    }, 0);
     // create Order that represent
     //SOMETHING MISSING HERE !!
     //
-    const order = await Order.create({ userId, products, total }); // later should use aggregation
+    const order = await Order.create({ userId, orderItems: products, total }); // later should use aggregation
 
     utilsHelper.sendResponse(res, 200, true, { order }, null, "Order created");
   } catch (error) {
@@ -66,6 +67,7 @@ orderController.updateOrder = async (req, res, next) => {
 orderController.deleteOrder = async (req, res, next) => {
   try {
     //SOMETHING MISSING HERE !!
+    const orderId = req.params.id;
     const order = await Order.findOneAndUpdate(
       {
         _id: orderId,

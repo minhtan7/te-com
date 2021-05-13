@@ -13,4 +13,8 @@ router.use("/auth", authApi);
 const productApi = require("./product.api");
 router.use("/products", productApi);
 
+// orderApi
+const orderApi = require("./order.api");
+router.use("/orders", orderApi);
+
 module.exports = router;
