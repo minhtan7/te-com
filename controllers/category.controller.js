@@ -21,10 +21,19 @@ categoryController.getAllCat = async (req, res, next) => {
 
 categoryController.createCat = async (req, res, next) => {
   try {
-    const { name, parentCategory = null } = req.body;
-    let category = await Category.findOne({ name });
-    if (category) throw new Error("Category is already exists");
-    category = await Category.create({ name, parentCategory });
+    const { name, parentCategoryId = null } = req.body;
+    /* let category = await Category.findOne({ name });
+    if (category) throw new Error("Category is already exists"); */
+    let category = await Category.findOneAndUpdate(
+      { name },
+      {
+        $set: {
+          name,
+          parentCategory: parentCategoryId,
+        },
+      },
+      { upsert: true, new: true }
+    );
     utilsHelper.sendResponse(
       res,
       200,
@@ -38,15 +47,38 @@ categoryController.createCat = async (req, res, next) => {
   }
 };
 
-categoryController.UpdateCat = async (req, res, next) => {
+/* categoryController.UpdateCat = async (req, res, next) => {
   try {
+    const { name, parentCategoryId = null } = req.body;
+    let category = await Category.findOne({ name });
+    if (category) throw new Error("Category is already exists");
+    category = await Category.create({
+      name,
+      parentCategory: parentCategoryId,
+    });
+    utilsHelper.sendResponse(
+      res,
+      200,
+      true,
+      { category },
+      null,
+      "Category successfully created"
+    );
   } catch (error) {
     next(error);
   }
-};
+}; */
 
 categoryController.deleteCat = async (req, res, next) => {
   try {
+    const { name } = req.body;
+    await Category.findByIdAndUpdate(
+      { name },
+      { isDeleted: true },
+      { new: true }
+    );
+    //find all the category id then delete in Category and Product
+    utilsHelper.sendResponse(res, 200, true, null, null, "Category deleted");
   } catch (error) {
     next(error);
   }

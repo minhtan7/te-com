@@ -28,19 +28,14 @@ router.post(
  * @description admin can update category
  * @access admin required
  */
-router.put(
-  "/",
-  authMiddleware.loginRequired,
-  authMiddleware.adminRequired,
-  categoryController.UpdateCat
-);
+/* s */
 
 /**
  * @route DELETE api/category/:id
  * @description admin can delete category
  * @access admin required
  */
-router.put(
+router.delete(
   "/",
   authMiddleware.loginRequired,
   authMiddleware.adminRequired,
