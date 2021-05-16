@@ -1,5 +1,4 @@
 const Order = require("../models/Order");
-const { prependListener } = require("../app");
 
 const orderController = {};
 
@@ -21,6 +20,8 @@ orderController.createOrder = async (req, res, next) => {
     next(error);
   }
 };
+
+//Get all orders
 
 //Get detail of an order by its ID
 orderController.getDetailOrder = async (req, res, next) => {

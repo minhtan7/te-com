@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;
 const User = require("../models/User");
+const Order = require("../models/Order");
 
 const authMiddleware = {};
 

@@ -10,14 +10,15 @@ const orderSchema = Schema(
         price: { type: Number, required: true },
         images: [{ imageUrl: { type: String, required: true } }],
         quantity: { type: Number, required: true },
+        productId: { type: Schema.Types.ObjectId, required: true },
       },
     ],
+    total: { type: Number, default: 0 },
     status: {
       type: String,
       emum: ["pending", "cancel", "paid", "confirmed", "delivery", "done"],
       default: "pending",
     },
-    total: { type: Number, default: 0 },
     isDeleted: { type: Boolean, default: false },
   },
   { timestamp: true }
